@@ -25,8 +25,8 @@ class BatchTest extends SparkSessionTestWrapper {
   )
   val interestedColumnSchema: StructType = StructType(Seq(
     StructField("Duration", IntegerType, nullable = true),
-    StructField("Start date", TimestampType, nullable = true),
-    StructField("Bike number", StringType, nullable = true),
+    StructField("Start_date", TimestampType, nullable = true),
+    StructField("Bike_number", StringType, nullable = true),
   ))
   val interestedDF: DataFrame = spark.createDataFrame(spark.sparkContext.parallelize(interestedData), interestedColumnSchema)
 
@@ -42,7 +42,7 @@ class BatchTest extends SparkSessionTestWrapper {
   )
   val rankedSchema: StructType = StructType(Seq(
     StructField("Date", DateType, nullable = true),
-    StructField("Bike number", StringType, nullable = true),
+    StructField("Bike_number", StringType, nullable = true),
     StructField("Duration", LongType, nullable = true),
     StructField("rank", IntegerType, nullable = false)
   ))

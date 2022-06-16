@@ -23,14 +23,14 @@ class StraightforwardTest extends BatchTest {
   }
 
   test("should leave only interested columns") {
-    val df = tripDF.select("Duration", "Start date", "Bike number")
+    val df = tripDF.select("Duration", "Start_date", "Bike_number")
 
     assert(isDfEqual(df, interestedData, interestedColumnSchema),
       "DataFrame should have expected interested data and schema")
   }
 
   test("should cast column to correct type") {
-    val df = interestedDF.withColumn("Date", col("Start date")
+    val df = interestedDF.withColumn("Date", col("Start_date")
       .cast(DateType)).drop("Start date")
 
     assert(df.schema("Date").dataType == DateType,
@@ -41,9 +41,9 @@ class StraightforwardTest extends BatchTest {
     val windowsSpec = Window.partitionBy("Date").orderBy(col("Duration").desc)
 
     val df = interestedDF
-      .withColumn("Date", col("Start date").cast(DateType))
+      .withColumn("Date", col("Start_date").cast(DateType))
       .drop("Start date")
-      .groupBy("Date", "Bike number")
+      .groupBy("Date", "Bike_number")
       .agg(sum("Duration").as("Duration"))
       .withColumn("rank", row_number().over(windowsSpec))
 
@@ -54,7 +54,7 @@ class StraightforwardTest extends BatchTest {
   test("should create DataFrame with top column") {
     val df = rankedDF
       .filter(col("rank") === 1)
-      .select("Date", "Bike number", "Duration")
+      .select("Date", "Bike_number", "Duration")
       .orderBy("Date")
 
     assert(isDfEqual(df, finalData, topForEachDaySchema),
