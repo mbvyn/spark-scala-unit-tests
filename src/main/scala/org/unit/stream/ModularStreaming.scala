@@ -37,21 +37,21 @@ object ModularStreaming {
   }
 
   def leaveInterestingColumns(df: DataFrame): DataFrame = {
-    df.select("Duration", "Start date", "Member type")
+    df.select("Duration", "Start_date", "Member_type")
   }
 
   def transformTimeStampToDate(df: DataFrame): DataFrame = {
-    df.withColumn("Date", col("Start date").cast(DateType))
-      .drop("Start date")
+    df.withColumn("Date", col("Start_date").cast(DateType))
+      .drop("Start_date")
   }
 
   def groupDFByDateAndMemberType(df: DataFrame): DataFrame = {
-    df.groupBy("Date", "Member type")
+    df.groupBy("Date", "Member_type")
       .agg(
-        sum("Duration").alias("Total duration"),
-        count("Duration").alias("Total trips"),
+        sum("Duration").alias("Total_duration"),
+        count("Duration").alias("Total_trips"),
       )
-      .withColumn("Total duration", round(col("Total duration") / 120))
+      .withColumn("Total_duration", round(col("Total_duration") / 120))
       .orderBy("Date")
   }
 }

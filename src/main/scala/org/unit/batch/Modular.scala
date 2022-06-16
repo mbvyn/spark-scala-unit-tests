@@ -43,24 +43,24 @@ object Modular {
   }
 
   def leaveInterestingColumns(df: DataFrame): DataFrame = {
-    df.select("Duration", "Start date", "Bike number")
+    df.select("Duration", "Start_date", "Bike_number")
   }
 
   def transformTimeStampToDate(df: DataFrame): DataFrame = {
-    df.withColumn("Date", col("Start date").cast(DateType)).drop("Start date")
+    df.withColumn("Date", col("Start_date").cast(DateType)).drop("Start_date")
   }
 
   def createDFWithRank(df: DataFrame): DataFrame = {
     val windowsSpec = Window.partitionBy("Date").orderBy(col("Duration").desc)
 
-    df.groupBy("Date", "Bike number")
+    df.groupBy("Date", "Bike_number")
       .agg(sum("Duration").as("Duration"))
       .withColumn("rank", row_number().over(windowsSpec))
   }
 
   def getTopBikesForEachDay(df: DataFrame): DataFrame = {
     df.filter(col("rank") === 1)
-      .select("Date", "Bike number", "Duration")
+      .select("Date", "Bike_number", "Duration")
       .orderBy("Date")
   }
 }

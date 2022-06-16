@@ -26,20 +26,20 @@ object Straightforward extends App {
     .option("header", "true")
     .csv("src/main/resources")
 
-  val interestedDF = tripDF.select("Duration", "Start date", "Bike number")
+  val interestedDF = tripDF.select("Duration", "Start_date", "Bike_number")
 
-  val transformedDF = interestedDF.withColumn("Date", col("Start date").cast(DateType)).drop("Start date")
+  val transformedDF = interestedDF.withColumn("Date", col("Start_date").cast(DateType)).drop("Start_date")
 
   val windowsSpec = Window.partitionBy("Date").orderBy(col("Duration").desc)
 
   val windowedDF = transformedDF
-    .groupBy("Date", "Bike number")
+    .groupBy("Date", "Bike_number")
     .agg(sum("Duration").as("Duration"))
     .withColumn("rank", row_number().over(windowsSpec))
 
   val topForEachDayDF = windowedDF
     .filter(col("rank") === 1)
-    .select("Date", "Bike number", "Duration")
+    .select("Date", "Bike_number", "Duration")
     .orderBy("Date")
 
   topForEachDayDF.show(false)
