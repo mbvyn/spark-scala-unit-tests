@@ -17,7 +17,7 @@ import java.sql.Timestamp
  *
  * And data that represents data from the csv file
  *
- * See [[org.unit.batch.BatchTest]] and [[org.unit.stream.ModularStreamingTest]] for more details.
+ * See [[org.unit.batch.BatchTest]] and [[org.unit.stream.StreamTest]] for more details.
  */
 class SparkSessionTestWrapper extends AnyFunSuite with BeforeAndAfterAll {
 
