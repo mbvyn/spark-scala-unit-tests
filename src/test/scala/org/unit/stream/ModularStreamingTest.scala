@@ -6,6 +6,14 @@ import org.apache.spark.sql.{DataFrame, SQLContext}
 import org.unit.schema.trip
 import org.unit.stream.ModularStreaming._
 
+/**
+ * This class is used to test the correctness of each function in [[ModularStreaming]].
+ *
+ * The class extends the [[org.unit.stream.StreamTest]]
+ * which has all necessary data, schemes, and additional methods.
+ *
+ * Spark session is provided by the [[org.unit.SparkSessionTestWrapper]] class
+ */
 class ModularStreamingTest extends StreamTest {
 
   import spark.implicits._
